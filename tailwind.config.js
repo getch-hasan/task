@@ -10,6 +10,11 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary:'#7E53D4'
+      },
+      fontFamily: {
+        manrope: ['Manrope', 'Arial', 'sans-serif'],
+        pacifico: ['Pacifico', 'cursive'],
       },
     },
   },

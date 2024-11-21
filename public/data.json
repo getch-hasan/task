@@ -1,0 +1,99 @@
+[
+    {
+      "thumbnail_image": "demo.png",
+      "gallery_image": [
+        "demo.png",
+        "demo.png",
+        "demo.png"
+      ],
+      "price": 3000,
+      "review": 120,
+      "rating": 4.5,
+      "color": ["Red", "Blue", "Black"],
+      "size": ["S", "M", "L", "XL"],
+      "category": "Electronics",
+      "title": "Smartphone XYZ",
+      "description": "A high-performance smartphone with a sleek design, featuring a powerful processor and a great camera."
+    },
+    {
+      "thumbnail_image": "demo.png",
+      "gallery_image": [
+        "demo.png",
+        "demo.png",
+        "demo.png"
+      ],
+      "price": 1500,
+      "review": 80,
+      "rating": 4.0,
+      "color": ["White", "Black"],
+      "size": ["M", "L"],
+      "category": "Clothing",
+      "title": "T-shirt ABC",
+      "description": "A comfortable cotton t-shirt perfect for everyday wear, available in multiple colors."
+    },
+    {
+      "thumbnail_image": "demo.png",
+      "gallery_image": [
+        "demo.png",
+        "demo.png",
+        "demo.png"
+      ],
+      "price": 1500,
+      "review": 80,
+      "rating": 4.0,
+      "color": ["White", "Black"],
+      "size": ["M", "L"],
+      "category": "Clothing",
+      "title": "T-shirt ABC",
+      "description": "A comfortable cotton t-shirt perfect for everyday wear, available in multiple colors."
+    },
+    {
+      "thumbnail_image": "demo.png",
+      "gallery_image": [
+        "demo.png",
+        "demo.png",
+        "demo.png"
+      ],
+      "price": 1500,
+      "review": 80,
+      "rating": 4.0,
+      "color": ["White", "Black"],
+      "size": ["M", "L"],
+      "category": "Clothing",
+      "title": "T-shirt ABC",
+      "description": "A comfortable cotton t-shirt perfect for everyday wear, available in multiple colors."
+    },
+    {
+      "thumbnail_image": "demo.png",
+      "gallery_image": [
+        "demo.png",
+        "demo.png",
+        "demo.png"
+      ],
+      "price": 1500,
+      "review": 80,
+      "rating": 4.0,
+      "color": ["White", "Black"],
+      "size": ["M", "L"],
+      "category": "Clothing",
+      "title": "T-shirt ABC",
+      "description": "A comfortable cotton t-shirt perfect for everyday wear, available in multiple colors."
+    },
+    {
+      "thumbnail_image": "demo.png",
+      "gallery_image": [
+        "demo.png",
+        "demo.png",
+        "demo.png"
+      ],
+      "price": 5500,
+      "review": 50,
+      "rating": 4.8,
+      "color": ["Black", "Grey"],
+      "size": ["S", "M", "L"],
+      "category": "Shoes",
+      "title": "Running Shoes ABC",
+      "description": "Durable and comfortable running shoes designed for performance and style."
+    }
+  ]
+  
