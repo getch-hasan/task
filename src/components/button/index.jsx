@@ -4,7 +4,7 @@ import { TbArrowUpRight } from 'react-icons/tb';
 const ShopnowButton = () => {
   return (
     
-    <button className="flex items-center">
+    <button className="flex text-white items-center">
       <span className="bg-primary rounded-full px-5 py-2 h-10 flex items-center justify-center">
         Shop Now
       </span>

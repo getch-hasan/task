@@ -4,7 +4,7 @@ import ShopnowButton from '../button';
 
 const Offer = () => {
   return (
-    <div className="container-sk flex flex-col gap-5 lg:flex-row justify-between items-center bg-[#EEECFB] p-5 lg:p-10">
+    <div className="container-sk relative flex flex-col md:h-[450px] gap-5 lg:flex-row justify-between items-center bg-[#EEECFB] p-5 lg:p-10">
   <div className="text-center flex flex-col  lg:text-left lg:px-10">
     <p className="font-normal text-2xl text-primary font-pacifico leading-9">
       Big Deal
@@ -14,12 +14,12 @@ const Offer = () => {
     </p>
     <div className='flex justify-center md:justify-start'><ShopnowButton /></div>
   </div>
-  <div className="flex justify-center lg:justify-end">
+  <div className="flex md:absolute bottom-0 md:right-20 justify-center lg:justify-end">
     <Image
       className="max-w-full h-auto"
-      height={500}
-      width={400}
-      src="/demo.png"
+      height={495}
+      width={427}
+      src="/assets/couple.svg"
       alt=""
     />
   </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -25,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full z-50 bg-[#F5F3FF] fixed">
+    <div className="w-full z-50  bg-[#F5F3FF] fixed">
       <nav className="py-3 flex container-sk justify-between text-black items-center">
         <div className="flex items-center gap-2">
           {/* Drawer Toggle Button for Small Devices */}
@@ -37,7 +38,8 @@ const Navbar = () => {
             {isDrawerOpen ? <FaTimes /> : <FaBars />}
           </button>
           <Link aria-label="link" href="/">
-            <p className="font-bold text-3xl">We5ive</p>
+          <Image height={30} width={150} src='/assets/logo.svg' alt=""/>
+           
           </Link>
         </div>
 

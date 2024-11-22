@@ -9,7 +9,7 @@ function Footer() {
       <div className="container-sk py-5 px-4 md:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
           <div className=" text-start">
-            <Image height={40} width={40} src="" alt="Logo" />
+            <Image height={40} width={40} src="/assets/logo.svg" alt="Logo" />
             <p className="text-base md:w-1/2 font-normal leading-5 mt-2 md:mt-4">
               Saepe quo suscipit vitae quia. Repudiandae nobis quis. Laboriosam
               unde quae qui quasi mollitia tenetur. Dicta explicabo est
