@@ -14,7 +14,7 @@ export default function Home() {
       <TopFeater title="New Arrivals" subtitel='FEATURED PRODUCT' />
       <Offer/>
       <CollectonSlider/>
-      <TopFeater title="big Deal" subtitel='summer' offer={true} />
+      <TopFeater title="Big Deal" subtitel='SUMMER' offer={true} />
     </div>
   );
 }

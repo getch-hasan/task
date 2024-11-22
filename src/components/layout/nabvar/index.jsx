@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaBars, FaRegUser, FaSearch, FaTimes } from "react-icons/fa";
 import { TbShoppingBag } from "react-icons/tb";
 
@@ -9,7 +9,10 @@ const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false); // State for search toggle on small devices
   const pathName = usePathname();
-
+  const [cart, setCart] = useState({
+    cart_items: [],
+    
+  });
   const navList = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/shop" },
@@ -24,7 +27,20 @@ const Navbar = () => {
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
   };
+  useEffect(() => {
+    const updateCart = () => {
+      const cartData = localStorage.getItem("cart");
+      if (cartData) {
+        setCart(JSON.parse(cartData));
+      }
+    };
+    updateCart();
 
+    window.addEventListener("cartUpdated", updateCart);
+    return () => {
+      window.removeEventListener("cartUpdated", updateCart);
+    };
+  }, []);
   return (
     <div className="w-full z-50  bg-[#F5F3FF] fixed">
       <nav className="py-3 flex container-sk justify-between text-black items-center">
@@ -91,8 +107,8 @@ const Navbar = () => {
             {/* Cart Icon with Badge */}
             <div className="relative">
               <TbShoppingBag className="h-6 w-6" />
-              <div className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                0
+              <div className="absolute -top-2 -right-2  bg-black text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+               <span> {cart?.cart_items?.length}</span>
               </div>
             </div>
 

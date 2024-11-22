@@ -1,49 +1,25 @@
 import Image from "next/image";
 import React, { useCallback, useEffect, useState } from "react";
-import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { TbShoppingBag } from "react-icons/tb";
-import { BiLike } from "react-icons/bi";
+
 import { useRouter } from "next/router";
 import TopFeater from "@/components/topFeatur";
+import Details from "@/components/details";
+import ReviewRating from "@/components/reviewRating";
+import Discussion from "@/components/discussion";
 const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("M");
-  const [selectedColor, setSelectedColor] = useState("Off White");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
   const [product, setProduct] = useState([]);
-  const router=useRouter()
+  const router = useRouter();
+  const [activeSection, setActiveSection] = useState("review-rating");
   const { id } = router.query;
   console.log(id);
-  const reviews = [
-    {
-      id: 1,
-      name: "Cameron Williamson",
-      date: "3 days ago",
-      comment: "Very Nice!",
-      rating: 4,
-    },
-    {
-      id: 2,
-      name: "Cameron Williamson",
-      date: "3 days ago",
-      comment: "Very Nice!",
-      rating: 4,
-    },
-  ];
-  const ratingDistribution = [
-    { stars: 5, count: 50 },
-    { stars: 4, count: 30 },
-    { stars: 3, count: 10 },
-    { stars: 2, count: 5 },
-    { stars: 1, count: 1 },
-  ];
 
-  const totalReviews = 121;
-  const averageRating = 4.0;
-
-  const data = product?.find((item) => item.id == id);
-
-  console.log(data);
+  const data = product?.find((item) => item.id == id); //find data using id
 
   const fetchProduct = useCallback(async () => {
     try {
@@ -53,14 +29,67 @@ const ProductDetailPage = () => {
       console.error("Error fetching product data:", error);
     }
   }, []);
+  const [cart, setCart] = useState([]);
+  const handelCart = () => {
+    //example if add to cart system using local storage
+    const cartItem = data;
 
+    let cart = localStorage.getItem("cart");
+    cart = cart ? JSON.parse(cart) : { cart_items: [] };
+
+    const isProductInCart = cart?.cart_items?.some(
+      (item) => item?.id === cartItem?.id
+    );
+
+    if (isProductInCart) {
+      //Toastify.Warning("Already in Cart");
+      alert("altready in card");
+    } else {
+      cart.cart_items.push(cartItem);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      window.dispatchEvent(new Event("cartUpdated"));
+      //Toastify.Success("Product added successfully");
+    }
+  };
+  console.log(cart);
   useEffect(() => {
     fetchProduct();
+    const updateCart = () => {
+      const cartData = localStorage.getItem("cart");
+      if (cartData) {
+        setCart(JSON.parse(cartData));
+      }
+    };
+    updateCart();
+
+    window.addEventListener("cartUpdated", updateCart);
+    return () => {
+      window.removeEventListener("cartUpdated", updateCart);
+    };
   }, [fetchProduct]);
 
   const handleQuantityChange = (type) => {
     if (type === "increment") setQuantity(quantity + 1);
     if (type === "decrement" && quantity > 1) setQuantity(quantity - 1);
+  };
+
+  const sections = [
+    { name: "Details", route: "details" },
+    { name: "Review & Rating", route: "review-rating" },
+    { name: "Discussion", route: "discussion" },
+  ];
+  // Default component to render
+  const renderComponent = (section) => {
+    switch (section) {
+      case "details":
+        return <Details />;
+      case "review-rating":
+        return <ReviewRating />;
+      case "discussion":
+        return <Discussion />;
+      default:
+        return <ReviewRating />;
+    }
   };
 
   return (
@@ -110,7 +139,7 @@ const ProductDetailPage = () => {
 
         {/* Right Section: Product Details */}
         <div className="flex-1">
-        <span className="inline-block bg-[#2F1C59] text-white text-base px-7 py-1 rounded-xl mb-6">
+          <span className="inline-block bg-[#2F1C59] text-white text-base px-7 py-1 rounded-xl mb-6">
             {data?.category}
           </span>
           <h1 className="text-3xl font-semibold mb-2 leading-10">
@@ -125,9 +154,11 @@ const ProductDetailPage = () => {
                   .map((_, index) => (
                     <FaStar key={index} className="text-yellow-500" />
                   ))}
-              {data?.rating % 1 !== 0 ? 
-                <FaStarHalfAlt className="text-yellow-500" />: <FaStar className="text-white"/>
-            }
+              {data?.rating % 1 !== 0 ? (
+                <FaStarHalfAlt className="text-yellow-500" />
+              ) : (
+                <FaStar className="text-white" />
+              )}
             </div>
             <p className="ml-2 text-gray-500">({data?.rating})</p>
             <p className="ml-4 text-primary font-semibold text-base">
@@ -137,7 +168,6 @@ const ProductDetailPage = () => {
           <p className="text-[28px] font-bold mb-2 leading-9">
             BDT {data?.price}
           </p>
-         
 
           {/* Available Sizes */}
           <div className="border-y py-5 grid md:grid-cols-2 justify-between">
@@ -214,100 +244,48 @@ const ProductDetailPage = () => {
             <button className="bg-primary text-white w-72 px-6 py-2 rounded-lg font-semibold text-base">
               Buy Now
             </button>
-            <button className="border border-purple-500 w-72 text-purple-500 px-6 py-2 rounded-lg font-semibold text-base">
+            <button
+              onClick={handelCart}
+              className="border border-purple-500 w-72 text-purple-500 px-6 py-2 rounded-lg font-semibold text-base"
+            >
               Add to Cart
             </button>
           </div>
           <div className="hidden fixed bottom-1/2 z-50 right-0 md:flex flex-col  justify-center items-center bg-[#581FC1] text-white px-4 py-2 rounded-l-2xl shadow-lg">
             <TbShoppingBag className="h-6 w-6" />
             Your Bag
-            <span>0</span>
+            <span>{cart?.cart_items?.length}</span>
           </div>
         </div>
       </div>
-
       <div className=" bg-white ">
-        <div className="flex flex-col container-sk py-10 md:flex-row gap-8">
-          {/* Review List */}
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-4">
-              <select className="border text-base font-semibold leading-5 border-gray-300 px-5 py-2 rounded-xl">
-                <option className="" value="newest">
-                  Newest
-                </option>
-                <option className="" value="oldest">
-                  Oldest
-                </option>
-                <option className="" value="highest">
-                  Highest Rated
-                </option>
-              </select>
-            </div>
-            {reviews.map((review) => (
-              <div
-                key={review.id}
-                className="border-b border-gray-300 py-4 flex gap-4"
-              >
-                <Image
-                  width={40}
-                  height={40}
-                  src="/assets/people.svg"
-                  alt={review.name}
-                  className="w-10 h-10 rounded-full"
-                />
-                <div>
-                  <div className="flex gap-2 items-center"><h4 className="font-semibold text-base leading-5">{review.name}</h4>
-                  <span className="text-sm text-[#656565] font-normal leading-4">{review.date}</span></div>
-                  <div className="flex items-center my-2">
-                    {[...Array(5)].map((_, index) => (
-                      <span key={index} className="text-yellow-500">
-                        {index < review.rating ? <FaStar className="h-8 w-8" /> : <FaRegStar className="h-8 w-8"/>}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-base font-bold leading-5">{review.comment}</p>
-                  <p  className="text-sm flex justify-start items-center gap-2 text-gray-500 mt-2"><BiLike/> 10</p>
-                </div>
-              </div>
-            ))}
+        <div>
+          {/* Navigation Links */}
+          <div className="bg-white py-4 px-6 container-sk">
+            <ul className="flex space-x-8">
+              {sections.map((section) => (
+                <li key={section?.route}>
+                  <button
+                    onClick={() => setActiveSection(section?.route)}
+                    className={`text-lg ${
+                      activeSection === section.route
+                        ? "text-blue-600 font-semibold"
+                        : "text-gray-500 hover:text-blue-600"
+                    }`}
+                  >
+                    {section.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Rating Distribution */}
-          <div className="w-full md:w-1/3">
-         <div className="flex items-center mb-5 gap-5">
-         <h3 className="font-semibold  leading-4 text-base">Product Review</h3>
-         <p className="text-gray-500">{totalReviews} reviews</p>
-         </div>
-            <div className="flex items-center mb-2">
-              <span className="flex items-center text-yellow-500">
-                {[...Array(5)].map((_, index) => (
-                  <FaStar className="w-10 h-10" key={index} />
-                ))}
-              </span>
-              <span className="ml-2">({averageRating})</span>
-            </div>
-           
-            <div className="mt-4">
-              {ratingDistribution.map((dist) => (
-                <div key={dist.stars} className="flex items-center gap-2 mb-2">
-                  <span className="text-sm font-medium">{dist.stars}</span>
-                  
-                  <div className="w-full h-[10px] bg-gray-200 rounded relative">
-                    <div
-                      className="absolute top-0 left-0 h-[10px] bg-yellow-500 rounded"
-                      style={{
-                        width: `${(dist.count / totalReviews) * 100}%`,
-                      }}
-                    ></div>
-                  </div>
-                  <span className="text-sm text-gray-500">{dist.count}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Nested Content Rendering */}
+          <div className="mt-6">{renderComponent(activeSection)}</div>
         </div>
       </div>
-      <TopFeater title='Related Product'/>
+
+      <TopFeater title="Related Product" />
     </main>
   );
 };
