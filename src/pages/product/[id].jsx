@@ -263,7 +263,7 @@ const ProductDetailPage = () => {
           {/* Navigation Links */}
           <div className="bg-white py-4 px-6 container-sk">
             <ul className="flex space-x-8">
-              {sections.map((section) => (
+              {sections?.map((section) => (
                 <li key={section?.route}>
                   <button
                     onClick={() => setActiveSection(section?.route)}

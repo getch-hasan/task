@@ -49,7 +49,7 @@ const ReviewRating = () => {
             </div>
             {reviews.map((review) => (
               <div
-                key={review.id}
+                key={review?.id}
                 className="border-b border-gray-300 py-4 flex gap-4"
               >
                 <Image
